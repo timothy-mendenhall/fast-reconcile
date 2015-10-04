@@ -16,6 +16,7 @@ from flask import jsonify
 import json
 from operator import itemgetter
 import urllib
+from sys import version_info
 
 #For scoring results
 from fuzzywuzzy import fuzz
@@ -27,6 +28,9 @@ app = Flask(__name__)
 api_base_url = 'http://fast.oclc.org/searchfast/fastsuggest'
 #For constructing links to FAST.
 fast_uri_base = 'http://id.worldcat.org/fast/{0}'
+
+#See if Python 3 for unicode/str use decisions
+PY3 = version_info > (3,)
 
 #If it's installed, use the requests_cache library to
 #cache calls to the FAST API.
@@ -130,7 +134,7 @@ def search(raw_query, query_type='/fast/all'):
     """
     out = []
     unique_fast_ids = []
-    query = text.normalize(raw_query).replace('the university of', 'university of').strip()
+    query = text.normalize(raw_query, PY3).replace('the university of', 'university of').strip()
     query_type_meta = [i for i in refine_to_fast if i['id'] == query_type]
     if query_type_meta == []:
         query_type_meta = default_query
@@ -166,9 +170,9 @@ def search(raw_query, query_type='/fast/all'):
         score_2 = fuzz.token_sort_ratio(query, alt)
         #Return a maximum score
         score = max(score_1, score_2)
-        if query == text.normalize(name):
+        if query == text.normalize(name, PY3):
             match = True
-        elif query == text.normalize(alt):
+        elif query == text.normalize(alt, PY3):
             match = True
         resource = {
             "id": fast_uri,

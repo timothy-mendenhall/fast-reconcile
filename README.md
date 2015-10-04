@@ -11,3 +11,7 @@ $ python reconcile.py --debug
 ~~~~
 
 Michael Stephens wrote a [demo reconcilliation service](https://github.com/mikejs/reconcile-demo) that this code is based on.
+
+##Changes for this Fork
+
+Updated to be able to run in either python 2 or 3.
