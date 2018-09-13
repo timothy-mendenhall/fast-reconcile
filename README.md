@@ -10,8 +10,9 @@ Run locally as:
 $ python reconcile.py --debug
 ~~~~
 
-Michael Stephens wrote a [demo reconcilliation service](https://github.com/mikejs/reconcile-demo) that this code is based on.
+Michael Stephens wrote a [demo reconcilliation service](https://github.com/mikejs/reconcile-demo), which Christina Harlow then updated. 
 
 ##Changes for this Fork
 
-Updated to be able to run in either python 2 or 3.
+This version has been tested on OpenRefine 2.8 and Python 3.7.  Minor tweaks to C. Harlow's fork of M. Stephens's code have been made to udpate the core reconcile.py for use in Python 3.7, and additional minor edits have been made to the text.py code to improve recall from the OCLC FAST API--not only do spaces need to be recoded as %20 rather than +, but so do parentheses, colons, commas, and periods, which can especially affect headings in the Title and Event facets, and therefore also the FAST All query type. 
+
