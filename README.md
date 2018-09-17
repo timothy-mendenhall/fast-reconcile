@@ -14,5 +14,5 @@ Michael Stephens wrote a [demo reconcilliation service](https://github.com/mikej
 
 ##Changes for this Fork
 
-This version has been tested on OpenRefine 2.8 and Python 3.7.  Minor tweaks to C. Harlow's fork of M. Stephens's code have been made to udpate the core reconcile.py for use in Python 3.7, and additional minor edits have been made to the text.py code to improve recall from the OCLC FAST API--not only do spaces need to be recoded as %20 rather than +, but so do parentheses, colons, commas, and periods, which can especially affect headings in the Title and Event facets, and therefore also the FAST All query type. 
+This version has been tested on OpenRefine 2.8 and Python 3.7 on a Windows 10 computer.  Minor tweaks to C. Harlow's fork of M. Stephens's code have been made to udpate the core reconcile.py for use in Python 3.7 (because of errors generated, at least when used in Windows 10), and additional minor edits have been made to the text.py code to improve recall from the OCLC FAST API--not only do spaces need to be recoded as %20 rather than +, but so do parentheses, colons, commas, and periods, which can especially affect headings in the Title and Event facets, and therefore also the FAST All query type. 
 
