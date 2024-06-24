@@ -106,13 +106,15 @@ metadata = {
 }
 
 
-def make_uri(fast_id):
-    """
-    Prepare a FAST url from the ID returned by the API.
-    """
-    fid = fast_id.lstrip('fst').lstrip('0')
-    fast_uri = fast_uri_base.format(fid)
-    return fast_uri
+# removing the make_uri function -- seems to cause errors after OCLC API update
+# def make_uri(fast_id):
+#    """
+#    Prepare a FAST url from the ID returned by the API.
+#    """
+#    fid = fast_id.lstrip('fst').lstrip('0')
+#    fast_uri = fast_uri_base.format(fid)
+#    fast_uri = fast_uri_base.format(fast_id)
+#    return fast_uri
 
 
 def jsonpify(obj):
@@ -142,7 +144,7 @@ def search(raw_query, query_type='/fast/all'):
     try:
         #FAST api requires spaces to be encoded as %20 rather than +
         url = api_base_url + '?query=' + urllib.parse.quote(query)
-        url += '&rows=30&queryReturn=suggestall%2Cidroot%2Cauth%2cscore&suggest=autoSubject'
+        url += '&rows=20&queryReturn=suggestall%2Cidroot%2Cauth%2cscore&suggest=autoSubject'
         url += '&queryIndex=' + query_index + '&wt=json'
         app.logger.debug("FAST API url is " + url)
         resp = requests.get(url)
@@ -158,8 +160,14 @@ def search(raw_query, query_type='/fast/all'):
             alt = alternate[0]
         else:
             alt = ''
-        fid = item.get('idroot')
-        fast_uri = make_uri(fid)
+        # trying to fix the list issue with the OCLC API update
+        # fid = item.get('idroot')
+        prep_fid = item.get('idroot')
+        fid = prep_fid[0]
+        clean_fid = fid.lstrip('fst').lstrip('0')
+        fast_uri = fast_uri_base.format(clean_fid)
+        # removing re. list issue -- problems with the make_uri function. 
+        # fast_uri = make_uri(fid)
         #The FAST service returns many duplicates.  Avoid returning many of the
         #same result
         if fid in unique_fast_ids:
